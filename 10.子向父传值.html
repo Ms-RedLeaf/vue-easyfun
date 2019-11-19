@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <component-a @myclick="myClick" v-for="(item,index) in goods" :title="item.title" :price="item.price">
+        </component-a>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script>
+        Vue.component("component-a", {
+            template: `<div>
+                        <h4>{{title}}</h4>
+                        <p>价格{{price}}</p>
+                        <button @click="handelClick">传值</button>
+                    </div>
+            `,
+            props: ["title", "price"],
+            methods: {
+                handelClick: function () {
+                    this.$emit("myclick", this.title)
+                }
+            }
+        })
+        var app = new Vue({
+            el: "#app",
+            data: {
+                goods: [
+                    {
+                        title: "苹果",
+                        price: '8000'
+                    },
+                    {
+                        title: "华为",
+                        price: '10000'
+                    }
+                ]
+            },
+            methods: {
+                myClick: function (data) {
+                    console.log(data);
+                    
+                }
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to='/user'>详情</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue-router/3.1.2/vue-router.min.js"></script>
+    <script>
+        //用户详情组件
+        const User = {
+            template: `<div>
+                        <p>详情页</p>
+                        <router-link to='/user/comment'>评论</router-link>
+                        <router-link to='/user/post'>文章</router-link>
+                        <router-view></router-view>
+                    </div>`};
+        //用户评论页
+        const Comment = { template: `<div>用户评论页</div>` }
+        // 用户文章页
+        const Post = { template: `<div>用户文章页</div>` }
+
+        const routes = [
+            //redirect:重定向
+            { path: '/', redirect: '/user/comment' },
+            {
+                path: '/user', component: User, children: [
+                    {
+                        path: 'comment', component: Comment
+                    },
+                    {
+                        path: 'post', component: Post
+                    }
+                ]
+            }
+        ];
+
+        const router = new VueRouter({
+            routes
+        })
+        var app = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            router
+        });
+
+    </script>
+
+</body>
+
+</html>

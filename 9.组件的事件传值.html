@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- @myclick是自定义事件名 ，不可用用大写 -->
+        <component-a @myclick="myClick"></component-a>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script>
+        // 创建组件
+        Vue.component("component-a",{
+            template:`
+                <div>
+                    <button @click="handelClick">确定</button>
+                <div>
+            `,
+            methods:{
+                // 点击的事件自动触发传过来的事件
+                handelClick:function(){
+                    this.$emit("myclick",'123')
+                }
+            }
+        })
+        var app = new Vue({
+            el: "#app",
+            methods:{
+                // 这个事件在组件中调用
+                myClick:function(e){
+                    console.log(e);
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>

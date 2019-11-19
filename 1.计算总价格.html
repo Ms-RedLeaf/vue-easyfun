@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app {
+            width: 500px;
+            border: 1px #eee solid;
+            padding: 10px 20px;
+            margin: 0 auto;
+        }
+
+        #app>div {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px #eee solid;
+        }
+
+        table {
+            width: 500px;
+            padding: 10px 0;
+        }
+
+        table td {
+            border-bottom: 1px #eee solid;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <table>
+            <div>
+                <!-- 根据元素设置的ref属性的值，获取到该元素 -->
+                <span>型号：<input type="text" v-model="newGoods.model" ref="modelInput" v-focus></span>
+                <span>价格：<input type="number" v-model="newGoods.price"></span>
+                <button @click="handleAdd">添加</button>
+            </div>
+            <div>
+                <!-- handleEnter是事件处理函数名 -->
+                <span>请输入预算金额 <input type="number" @keyup.enter="handleEnter($event)"></span>
+            </div>
+            <tr v-for="(item, index) in goods" v-if="money >= item.price">
+                <td>{{index}}</td>
+                <td>{{item.model}}</td>
+                <!-- tofixed是一个过滤器，作用于item.price -->
+                <td>{{ item.price | tofixed }}</td>
+                <td><button @click="handleDelete(index)">删除</button></td>
+            </tr>
+        </table>
+        <div>总价：{{allPrice}}</div>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            // 声明实例模板
+            el: "#app",
+            // 实例的数据
+            data: {
+                goods: [
+                    { model: "iphonex", price: 10000 },
+                    { model: "huawei", price: 8000 },
+                    { model: "xiaomi", price: 6000.5 }
+                ],
+                // 预算金额
+                money: 10000,
+                // 关联到新商品的输入框
+                newGoods: {
+                    model: "",
+                    price: ""
+                }
+            },
+            methods: {
+                // 1.如果事件函数没有传递参数，默认第一个参数就是事件对象
+                // 2.如果模板中引用事件时候，如果传递的参数是模板关键字$event，也是表示事件对象
+                handleEnter: function (event) {
+                    // 获取input的值
+                    var value = event.target.value;
+
+                    // 把值赋值给money
+                    this.money = value;
+                },
+
+                // 删除
+                handleDelete: function (index) {
+                    // this.goods.splice(index, 1);
+                    // 用slice把goods切割成新的数组
+                    let arr = this.goods.slice(0)
+                    // 在新的数组中删除
+                    arr.splice(index, 1)
+                    // 重新赋值
+                    this.goods = arr
+                },
+
+                // 添加商品
+                handleAdd: function () {
+
+                    // this.goods.push(this.newGoods);
+                    // 用slice把goods切割成新的数组
+                    let arr = this.goods.slice(0);
+                    // 在新的数组中添加
+                    arr.push(this.newGoods);
+                    // 重新赋值
+                    this.goods = arr;
+                }
+            },
+
+            // 自定义指令
+            directives: {
+                // 获取dom元素,声明指令时候不需要加上v-，
+                // 调用时候需要在前面加上v-
+                // focus是自己定义，可以修改
+                focus: {
+                    // 固定钩子函数（所谓的钩子函数类似事件，在"特定的情况"下触发事件）
+                    // 调用focus指令的元素在插入到父节点时候触发这个方法（页面加载完成之后）
+                    inserted: function (el) {
+                        // 给调用指令的元素绑定焦点
+                        el.focus();
+                    }
+                }
+            },
+
+            // 过滤器
+            filters: {
+                // 自定义的过滤器，tofixed只是一个普通的方法名，可以修改、
+                // value来自于调用该过滤的元素
+                tofixed: function (value) {
+                    // 给value保留两位小数点，再返回
+                    // Number().toFixed是原生的bom方法
+                    var res = Number(value).toFixed(2);
+                    return res;
+                }
+            },
+            // 计算总价格
+            computed: {
+                allPrice: function () {
+                    // 创建变量存储总价格
+                    let price = 0;
+                    // 闭包会改变this的指向
+                    let that = this;
+                    // forEach循环
+                    this.goods.forEach(function (v) {
+                        //判断当前价格不能大于预算价格
+                        if (that.money >= v.price) {
+                            // 价格累加
+                            price += v.price
+                        }
+                    })
+                    // 返回总价格
+                    return price;
+                }
+            },
+            // 监听属性
+            watch: {
+                goods: function (val, oldVal) {
+                    if (val.length > oldVal.length) {
+                        console.log('添加了');
+                    } else if (val.length < oldVal.length) {
+                        console.log('删除了');
+
+                    }
+                }
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

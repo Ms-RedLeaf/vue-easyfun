@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background: red;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="handelClick">隐藏/显示</button>
+        <box v-if="isShow"></box>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script>
+        Vue.component("box", {
+            template: `<div class='box'></div>`,
+            //created:在实例创建完成后立刻调用
+            created: function () {
+                //创建组件的时候触发
+                console.log("组件创建");
+            },
+            //mounted：通常用来调用ajax的数据
+            mounted:function(){
+                //组件加载完成后触发
+                console.log("组件加载完毕");
+            },
+            //destroyed:通常用来销毁组件的相关数据，防止内存泄露
+            destroyed:function(){
+                //组件在销毁的时候触发
+                console.log("组件被销毁");
+                
+            }
+        })
+        var app = new Vue({
+            el: "#app",
+
+            data: {
+                isShow: false
+            },
+            methods: {
+                handelClick: function () {
+                    this.isShow = !this.isShow
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>

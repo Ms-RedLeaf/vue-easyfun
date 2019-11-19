@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user/122">详情</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue-router/3.1.2/vue-router.min.js"></script>
+    <script>
+        let User = {
+            template: `<div>这是一个用户详情</div>`,
+            mounted:function(){
+                console.log(this.$route.params);
+                
+            }
+        }
+
+        let routes = [
+            { path: '/user/:id', component: User }
+        ]
+
+        let router = new VueRouter({
+            routes
+        })
+        var app = new Vue({
+            el: "#app",
+
+            data: {
+
+            },
+            router
+        });
+
+    </script>
+
+</body>
+
+</html>

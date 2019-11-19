@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user">详情</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue-router/3.1.2/vue-router.min.js"></script>
+    <script>
+        const User = {
+            template: `
+                <div>
+                    <div style='border:1px solid red;padding:5px 10px'>
+                        当前页面
+                        <span>{{navs}}</span>
+                    </div>
+                    <p>用户详情页面</p>
+                    <router-link to='/user/comment'>评论</router-link>
+                    <router-link to='/user/post'>文章</router-link>
+                    <router-view><router-view>
+                </div>
+        `,
+            data: function () {
+                return {
+                    navs: ''
+                }
+            },
+            watch: {
+                $route: function () {
+                    console.log(this.$route);
+                    const matched = this.$route.matched
+                    const arr = matched.map(function (v) {
+                        return v.meta
+                    })
+                    console.log(arr);
+                    
+                    this.navs = arr.join(" -> ");
+                }
+            }
+        }
+        const Comment = {
+            template: `<div>用户评论详情</div>`
+        }
+        const Post = {
+            template: `<div>用户文章详情</div>`
+        }
+
+        const routes = [
+            {
+                path: '/User', component: User, meta: "用户详情", children: [
+                    {
+                        path: 'comment', component: Comment, meta: "用户评论"
+                    },
+                    {
+                        path: 'post', component: Post, meta: "用户文章"
+                    }
+                ]
+            }
+        ]
+
+        const router = new VueRouter({
+            routes
+        })
+        var app = new Vue({
+            el: "#app",
+
+            data: {
+
+            },
+            router
+        });
+
+    </script>
+
+</body>
+
+</html>

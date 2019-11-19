@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- router-link的作用和a标签是一样的，用于导航链接 -->
+        <router-link to="/login">登录</router-link>
+        <router-link to="/register">注册</router-link>
+        <!-- 组件占位符，将路径匹配的组件渲染到这里-->
+        <router-view></router-view>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue-router/3.1.2/vue-router.min.js"></script>
+    <script>
+        // 1.创建组件所需要的路由
+        let Login = { template: `<div>登录页</div>` }
+        let register = { template: `<div>注册页</div>` }
+
+        // 2.配置路由
+        let routes = [
+            {
+                path: '/login', component: Login
+            },
+            {
+                path: '/register', component: register
+            }
+        ]
+
+        // 3.创建路由实例对象
+        let router = new VueRouter({
+            routes
+        })
+        var app = new Vue({
+            el: "#app",
+            data: {
+
+            },
+        // 4.将路由实例对象挂载到根实例
+            router
+        });
+
+    </script>
+
+</body>
+
+</html>

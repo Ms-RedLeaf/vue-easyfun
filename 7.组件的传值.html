@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <goods-item title="苹果" price="8000"></goods-item>
+        <goods-item title="华为" price="10000"></goods-item>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script>
+        Vue.component("goods-item",
+            {
+                template: `
+                <div>
+                    <p>{{title}}</p>
+                    <p>价格:{{price}}</p>
+                </div>
+        `,
+        props:["title","price"]
+         }
+        )
+        var app = new Vue({
+            el: "#app",
+            data: {
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>

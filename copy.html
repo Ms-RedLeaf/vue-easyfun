@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 对象语法:动态绑定的类名有 '-' 就要加在类名'' -->
+        <!-- <div v-bind:class="{active:isActive,'text-danger':hasError}"></div> -->
+        <!-- <div v-bind:class="[isActive ? activeClass : '', errorClass]"></div> -->
+
+        <!-- <div v-bind:style="{color:activeColor,fontSize:fontSize+'px'}">11</div> -->
+        <input type="text">
+        <div v-bind:style="styleObject"></div>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/vue-router/3.1.2/vue-router.min.js"></script> -->
+    <script>
+        var app = new Vue({
+            el: "#app",
+
+            data: {
+                // isActive: true,
+                // hasError: false,
+                // activeClass: 'active',
+                // errorClass: 'text-danger',
+                styleObject: {
+                    color: 'red',
+                    fontSize: '20px'
+                }
+
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

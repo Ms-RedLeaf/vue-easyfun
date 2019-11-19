@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background: #eee;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <color-input @getcolor="getColor"></color-input>
+        <box :color="color"></box>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script>
+        Vue.component("color-input", {
+            template: `<p>请输入颜色 <input tyep="text" @keyup.enter="handleEnter"/> </p>`,
+            methods: {
+                handleEnter: function (e) {
+                    this.$emit("getcolor", e.target.value)
+                }
+            }
+        })
+
+        Vue.component("box", {
+            template: `<div class="box" :style="'background:' + color"></div>`,
+            props: ["color"]
+
+        })
+        var app = new Vue({
+            el: "#app",
+            data: {
+                color: ""
+            },
+            methods: {
+                getColor: function (color) {
+                    this.color = color;
+                    console.log(this.color);
+
+                }
+            }
+
+        })
+
+    </script>
+
+</body>
+
+</html>

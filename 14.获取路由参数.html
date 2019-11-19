@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to='/login?username=xiaoyan&age=18'>登录</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue-router/3.1.2/vue-router.min.js"></script>
+    <script>
+        // 1.创建组件
+        let Login = {
+            template: `<div>登录页</div>`,
+            mounted:function(){
+                //this.$route获取路由信息
+                let {username,age} =this.$route.query
+                console.log(username,age);
+                
+            }   
+        }
+        //2.定义路由配置
+        let routes = [
+            { path: '/login', component: Login }
+        ]
+        //3.创建路由实例对象
+        let router = new VueRouter({
+            routes
+        })
+        var app = new Vue({
+            el: "#app",
+
+            data: {
+
+            },
+            //4.把路由实例对象挂载到根实例
+            router
+        });
+
+    </script>
+
+</body>
+
+</html>
